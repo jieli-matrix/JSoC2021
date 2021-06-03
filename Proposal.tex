@@ -1,0 +1,68 @@
+\section{Summary of the Proposal}
+
+Sparse matrices are extensively used in scientific computing, however there is no automatic differentiation package in Julia yet to handle sparse matrix operations yet. This project will utilize the reversible embedded domain-specific language NiLang.jl to differentiate sparse matrix operations by re-writing the sparse functions in Julia base in a reversible style. We will port the generated backward rules to ChainRules.jl as an extension, where ChainRules.jl is the most popular Julia package providing backward rules for automatic differentiation packages.
+
+\section{Introduction}
+
+Content included in \textbf{Para1}
+\begin{itemize}
+    \item Importance of Sparse Matrix
+    \item Automatic Differentiation topic generalization
+    \item Reviewing previous tools, forward AD, reverse AD and mixed AD
+\end{itemize}
+
+Content included in \textbf{Para2}
+\begin{itemize}
+    \item Gap between classical AD and eDSL\cite{liu2020differentiate}
+    \item Outline purpose: implement AD for sparse matrix operations
+    \item Summarize methods and expected outcome
+    \item State the value
+\end{itemize}
+
+Content included in \textbf{Para3}  
+\begin{itemize}
+    \item Structure of this proposal
+\end{itemize}
+
+
+
+
+\section{Goal and Objectives}
+\label{sec:goals}
+\begin{itemize}
+    \item An automatic differentiation on sparse matrix Julia package writen by NiLang
+    \item Test converage above 80\%
+    \item  Export chain rules into ChainRules.jl
+\end{itemize} 
+
+\section{Design and Decision Details}
+
+\subsection{SparseCSC}
+SparseCSC format for sparse matrix in julia
+
+\subsection{Low Level Operations}
+sparse matrix operation  
+
+sparse tensor operation (needed?)
+
+\subsection{High Level Operations}
+pca-lowrank, svd-lowrank
+
+\subsection{Export Chain Rules into ChainRules.jl}
+define rules for sparse matrix
+
+\section{Delivery, Schedule and Timeline}
+
+\subsection{Delivery}
+expectation packages
+
+\subsection{Schedule}
+ask advice from mentors
+
+\subsection{Timeline}
+ Gantt chart \cite{gantt1910work}
+\vspace{0.5cm}
+
+\input{gantt.tex}
+
+
