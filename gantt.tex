@@ -1,0 +1,59 @@
+\noindent\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[x=.5cm, y=1cm] 
+\centering
+        \begin{ganttchart}[%Specs
+            y unit title=0.4cm,
+            y unit chart=0.5cm,
+            canvas/.style={fill=none, draw=black, line width=.75pt},
+            vgrid,
+            title label anchor/.style={below=-1.6ex},
+            title left shift=.05,
+            title right shift=-.05,
+            title height=1,
+            title/.style={fill=none},
+            title label font=\bfseries,
+            bar/.style={fill=barblue},
+            incomplete/.style={fill=white},
+            progress label text={},
+            bar height=0.7,
+            group right shift=0,
+            group top shift=.6,
+            group height=.3,
+            group peaks height=.2]{1}{36}
+
+            %labels
+            \gantttitle{2021}{36}\\
+            \gantttitle{Jul}{12}
+            \gantttitle{Aug}{12}
+            \gantttitle{Sep}{12}
+            \\
+
+            % Parameter Selection
+            \ganttgroup{Stage 1}{2}{12}\\ %elem0
+            %\ganttbar[progress=0]{sub-objective}{2}{18}\\
+            \ganttmilestone{Milestone}{9}\\\\
+
+            % Testing equipment
+            \ganttgroup{Stage 2}{13}{25}\\ %elem0
+            %\ganttbar[progress=0]{Bar}{2}{18}\\
+            \ganttmilestone{Milestone}{18}\\\\
+
+            % Testing
+            \ganttgroup{Stage 3}{26}{32}\\ 
+            %\ganttbar[progress=0]{Bar}{19}{35}\\
+            %\ganttbar[progress=0]{Bar}{19}{35}\\
+            \ganttmilestone{Milestone}{27}\\
+            %\ganttmilestone{Milestone}{35}\\
+
+            % Algorithm Development
+            \ganttgroup{Stage 4}{33}{35}\\ 
+            %\ganttbar[progress=0]{Bar}{28}{35} \\
+
+            %relations 
+            %\ganttlink{elem2}{elem6}
+            %\ganttlink{elem5}{elem6}
+            %\ganttlink{elem9}{elem11}
+
+        \end{ganttchart}
+    \label{fig:Gantt2014}
+\end{tikzpicture}}  
