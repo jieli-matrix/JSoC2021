@@ -69,7 +69,29 @@ I list the timeline of this project in the form of Gantt chart.
 \end{enumerate}
     
 \subsection{Problems and Solutions}  
-You could focus on the summary and experience
+To complete the projcet, one should be equipped with both good sense of numerical linear algebra and automatic differentiation \textbf{in 
+theory} and familiarity with NiLang.jl, ChainRules.jl and so on \textbf{in practice}. It took me much of time to figure out how automatic 
+differentiation works out in computation process. In this section, I would only introduce the problems and solutions I came cross in practice.
+\subsubsection{Incorrect gradient of sparse vector}
+When I tried to export chain rules of function \textit{dot}, all the checks failed in ChainRulesTestUtils.
+Then, I printed the gradient calculated by NiLang and found it proved to be zero which was really abnormal. 
+I fed back the strange phenomenon to mentor and he told me that iterator can not carry gradients and the dangerous feature would 
+be removed from NiLang in the future. After I corrected the codes according to his suggestions, all the checks passed.
+The problem also gave a good reason to remove iterator support to avoid potential missing of gradients in NiLang, which had been metioned 
+in \href{https://github.com/GiggleLiu/NiLang.jl/issues/76}{this issue}.  
+\subsubsection{Test on Generated Rules}
+In our project, I calculated the gradient of sparse matrix in reversal mode in NiLang. To test the correctness 
+of the gradient, I should calculate gradient in an another way. There are many choices such as FiniteDifferences, ForwardDiff and 
+so on. After discussing with mentors, I decided to use ChainRulesTestUtils to check the correctness of the gradient, which was highly recommended by Lyndon White in JuliaCon2020. At first, I implemented tangent of 
+sparse matrix by myself, it is a bit hard task for me since there are no related examples. Later, mentor and I talked about this problem with Lyndon White, the 
+core founder of ChainRules, in slack and he mentioned rand\_tangent method may help. I read related source code in CRTU and made some changes so as to keep the 
+adjoint gradient could keep the sparsity. Finally all the rules checked by CRTU and passed all the tests successfully. 
+\subsubsection{Add support for QR rules}
+The low\_rank\_svd involved with QR decomposition which was used to find the approximate basis. 
+However, backward rules of QR decomposition were ensembled neither in ChainRules nor Zygote. In order to 
+calculate the gradient of low\_rank\_svd, I wrapped the QR rules in ChainRules and checked by CRTU in help of mentor. 
+I would like to enhance the implementation of QR rules (keep Q factor and R factor in compactWY format) and pull request to 
+ChainRules.jl in the future. 
 \subsection{Development Quality}
 You could give a self evaluation of development quality
 \subsection{Communication and Feedback with Mentor}
