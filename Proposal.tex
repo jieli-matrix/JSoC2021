@@ -9,7 +9,7 @@ This project is shipped by four (mostly) sequential stages:
 \begin{enumerate}[(1)]
     \item Implement low level operations by NiLang.
     \item Carefully test by CI and export chain rules into ChainRules.jl. 
-    \item Implement high level operations by NiLang and export chain rules.
+    \item Implement high level operations and perform AD operations.
     \item Add some use cases and enhance docs. 
 \end{enumerate}
 
@@ -17,7 +17,7 @@ I list the timeline of this project in the form of Gantt chart.
 \begin{enumerate}[(1)]
     \item 1st Jul - 31st Jul \quad Implement low level operations by NiLang. 
     \item 1st Aug - 15th Aug   \quad Carefully test by CI and export chain rules into ChainRules.jl.
-    \item 15th Sep - 20th Sep \quad  Implement high level operations by NiLang and export chain rules. 
+    \item 15th Sep - 20th Sep \quad  Implement high level operations and perform AD operations. 
     \item 21st Sep - 30th Sep \quad Add some use cases and enhance docs.
 \end{enumerate}
 \vspace{0.5cm}
@@ -29,13 +29,45 @@ I list the timeline of this project in the form of Gantt chart.
 \subsection{Project Output}
 \begin{enumerate}[(1)]
     \item Differentiate sparse matrix operations in Julia base by rewriting the sparse functions in NiLang.jl.  
-    \textit{Already completed.}
-    \item Port the generated backward rules to ChainRules.jl as an extension.
-    \item Release an open source julia package with test coverage over 85\%.
-    \item Add some use cases for getting a start.
+    \textbf{Status: } \textit{Already completed. Black-box tests on NiLang programs have passed in CI.}  
+    \href{https://github.com/jieli-matrix/SparseArraysAD.jl/pull/20}{Related PR}
+    \item Port the generated backward rules to ChainRules.jl as an extension. \\ 
+    \textbf{Status: } \textit{Already completed. Backward rules have been checked by ChainRulesTestUtils.}  
+    \href{https://github.com/jieli-matrix/SparseArraysAD.jl/pull/39}{Related PR}
+    \item Release an open source julia package with test coverage over 85\%.  \\
+    \textbf{Status: } \textit{Test coverage achieved at 87\%.} 
+    \href{https://app.codecov.io/gh/jieli-matrix/SparseArraysAD.jl}{Code Converage Report} 
+    \item Add some use cases for getting a start.  \\
+    \textbf{Status: } \textit{Already completed. A simple use case is shown in ReadMe.}  
+    \href{https://github.com/jieli-matrix/SparseArraysAD.jl/pull/34}{Related PR}
 \end{enumerate}
 \subsection{Scheme Progress}
-You could demonstrate the current progress according to the original scheme and time plan
+\begin{enumerate}
+    \item 1st Jul - 31st Jul \quad Implement low level operations by NiLang.  \\
+    \textit{I have rewritten almost all sparse matrix multiplication and dot operations in Julia base by NiLang.  
+    I list the implemented sparse matrix operators as follows. 
+    All the functions listed have passed CI tests and the code coverage have achieved over 85\%.}
+    \begin{lstlisting}[language=Julia]
+        function imul!(C::StridedVecOrMat, A::AbstractSparseMatrix{T}, B::DenseInputVecOrMat, α::Number, β::Number) where T
+        function imul!(C::StridedVecOrMat, xA::Adjoint{T, <:AbstractSparseMatrix}, B::DenseInputVecOrMat, α::Number, β::Number) where T
+        function imul!(C::StridedVecOrMat, X::DenseMatrixUnion, A::AbstractSparseMatrix{T}, α::Number, β::Number) where T
+        function imul!(C::StridedVecOrMat, X::Adjoint{T1, <:DenseMatrixUnion}, A::AbstractSparseMatrix{T2}, α::Number, β::Number) where {T1, T2}
+        function imul!(C::StridedVecOrMat, X::DenseMatrixUnion, xA::Adjoint{T, <:AbstractSparseMatrix}, α::Number, β::Number) where T
+        function idot(r, A::SparseMatrixCSC{T},B::SparseMatrixCSC{T}) where {T}
+        function idot(r, x::AbstractVector, A::AbstractSparseMatrix{T1}, y::AbstractVector{T2}) where {T1, T2}
+        function idot(r, x::SparseVector, A::AbstractSparseMatrix{T1}, y::SparseVector{T2}) where {T1, T2}
+    \end{lstlisting}  
+    \item 1st Aug - 15th Aug   \quad Carefully test by CI and export chain rules into ChainRules.jl.  \\
+    \textit{I have exported the backward rules into ChainRules.jl. I used ChainRulesTestUtils.jl to test correctness and robustness of 
+    sparse matrix AD rules. All the rules have passed CI tests.}
+    \item 15th Sep - 20th Sep \quad  Implement high level operations and perform AD operation. \\
+    \textit{I have implemented low rank svd algorithm in Julia. To perform AD on low\_rank\_svd algorithm, I wrapped backward rules of 
+    QR decomposition since QR rules haven't been ensembled in ChainRules. I used finite differences method to check the correctness 
+    of the algorithm. All the code have passed CI tests and the code converage have achieved at 87\% finally.}
+    \item 21st Sep - 30th Sep \quad Add some use cases and enhance docs. \\
+    \textit{A simple use case has been added into ReadMe in the project.}
+\end{enumerate}
+    
 \subsection{Problems and Solutions}  
 You could focus on the summary and experience
 \subsection{Development Quality}
