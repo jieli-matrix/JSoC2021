@@ -93,6 +93,27 @@ calculate the gradient of low\_rank\_svd, I wrapped the QR rules in ChainRules a
 I would like to enhance the implementation of QR rules (keep Q factor and R factor in compactWY format) and pull request to 
 ChainRules.jl in the future. 
 \subsection{Development Quality}
-You could give a self evaluation of development quality
+\begin{enumerate}
+    \item Code style  \\
+    Blue style was recommended in Julia. Since I was a freshman in Julia, I
+    would read related code and initiated their writing style. I was really amazing at 
+    the delicate code structure when I read source code in SparseArrays, FiniteDifferences 
+    and ChainRulesTestUtils. I tried to initiate such projects and made code in the project more 
+    readable and clearer.   
+    \item Project Structure \\
+    I used the PkgTemplate in Julia, which was the standard project template in Julia. 
+    Core source code and auxiliary test code were splited in different folders. It was easy to 
+    perform unit tests and add or remove dependencies for developers. Besides, it was also 
+    convenient for users to add the package and use it. 
+    \item Robustness \\
+    I wrote test code for each function in source code and code coverage achieved at 87\% finally. Furthermore, Continuous Integration (CI)
+    has been set in Github Actions, which would be triggered automatically when I commited code to 
+    github repository. Updated changes would be merged into master branch only when all the checks 
+    passed in CI.   
+    \item Work Pipeline \\
+    I really appreciated great efforts of mentors. When I came across abnormal bugs, they would discuss the problems with me 
+    and provide useful suggestions. After the code passed CI tests, they would review my code carefully and then approved or merged the 
+    updates into master branch. 
+\end{enumerate}
 \subsection{Communication and Feedback with Mentor}
 
